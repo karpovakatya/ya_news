@@ -31,24 +31,6 @@ class TestRoutes(TestCase):
             text='Текст комментария'
         )
 
-    # def test_home_page(self):
-    #     # Вызываем метод get для клиента (self.client)
-    #     # и загружаем главную страницу.
-    #     url = reverse('news:home')
-    #     # response = self.client.get('/')
-    #     response = self.client.get(url)
-    #     # Проверяем, что код ответа равен 200 OK.
-    #     self.assertEqual(response.status_code, HTTPStatus.OK)
-
-    # # Получаем адрес страницы для запроса
-    # # path('news/<int:pk>/', views.NewsDetailView.as_view(), name='detail')
-    # # Адресом страницы с новостью, созданной в фикстуре, будет /news/1/: 
-    # # нам точно известно, что это первый объект, который создан в пустой таблице БД.
-    # def test_detail_page(self):
-    #     url = reverse('news:detail', args=(self.news.id,))
-    #     response = self.client.get(url)
-    #     self.assertEqual(response.status_code, HTTPStatus.OK)
-
     '''
     Проверяем доступность страниц для анонимных пользователей.
     '''
