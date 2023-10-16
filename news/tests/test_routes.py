@@ -1,14 +1,11 @@
 from http import HTTPStatus
 
-# Импортируем функцию для определения модели пользователя.
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-# Импортируем класс модели новостей.
 from news.models import Comment, News
 
-# Получаем модель пользователя.
 User = get_user_model()
 
 
@@ -40,7 +37,7 @@ class TestRoutes(TestCase):
         # имя пути и позиционные аргументы для функции reverse().
         urls = (
             # Путь для главной страницы не принимает
-            # никаких позиционных аргументов, 
+            # никаких позиционных аргументов,
             # поэтому вторым параметром ставим None.
             ('news:home', None),  # главная
             # Путь для страницы новости
@@ -61,11 +58,16 @@ class TestRoutes(TestCase):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
+    '''
+    Проверяем доступность редактирования и удаления комментариев
+    для автора и не-автора.
+    '''
     # Эти проверки можно записать в виде subTest() на четыре строки,
     # но Напишем код иначе: через вложенные циклы.
     def test_availability_for_comment_edit_and_delete(self):
         # вложенные кортежи будут содержать объект пользователя и ответ,
-        # который ожидается при обращении к страницам редактирования и удаления комментария
+        # который ожидается при обращении к страницам редактирования
+        # и удаления комментария
         users_statuses = (
             (self.author, HTTPStatus.OK),
             (self.reader, HTTPStatus.NOT_FOUND),
@@ -81,8 +83,9 @@ class TestRoutes(TestCase):
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, status)
 
-    # При тестировании редиректа применяйте метод 'assertRedirects' из 'django.test'
-
+    '''
+    Проверяем редиректы для анонимных пользователей.
+    '''
     # Для двух страниц нужно провести одинаковые тесты — применим subTest()
     def test_redirect_for_anonymous_client(self):
         # Сохраняем адрес страницы логина:
@@ -94,8 +97,6 @@ class TestRoutes(TestCase):
                 url = reverse(name, args=(self.comment.id,))
                 # Получаем ожидаемый адрес страницы логина,
                 # на который будет перенаправлен пользователь.
-                # Учитываем, что в адресе будет параметр next, в котором передаётся
-                # адрес страницы, с которой пользователь был переадресован.
                 redirect_url = f'{login_url}?next={url}'  # ОР
                 response = self.client.get(url)  # ФР
                 # Проверяем, что редирект приведёт именно на указанную ссылку.
