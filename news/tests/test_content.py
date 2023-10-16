@@ -1,4 +1,4 @@
-from http import HTTPStatus
+# from http import HTTPStatus
 from datetime import datetime, timedelta
 from django.utils import timezone
 
@@ -63,6 +63,7 @@ class TestDetailPage(TestCase):
         )
         # Сохраняем в переменную адрес страницы с новостью:
         cls.detail_url = reverse('news:detail', args=(cls.news.id,))
+        # создаем автора комментариев
         cls.author = User.objects.create(username='Комментатор')
         # Запоминаем текущее время:
         now = timezone.now()
